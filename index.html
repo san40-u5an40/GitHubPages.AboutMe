@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./icons/siteicon.png">
+    <title>Саня - C#/.NET Разработчик</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            color: #e5e7eb;
+            background: #3b0000ff;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .profile-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        a:hover {
+            text-decoration: none;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            color: #f3f4f6;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #662b2b4d;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #b60000ff;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .skill-card {
+            background: #2d2d2d;
+            border-radius: 12px;
+            padding: 1.75rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            border-left: 4px solid #b60000ff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+        }
+        
+        .skill-card h3 {
+            color: #f9fafb;
+            font-size: 1.3rem;
+            margin: 0 0 1rem 0;
+            padding-left: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .skill-card ul {
+            color: #d1d5db;
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+        
+        .skill-card li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            background: #2d2d2d;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #f3f4f6;
+            transition: all 0.2s ease;
+            border: 1px solid #585858ff;
+            gap: 0.75rem;
+        }
+        
+        .social-link:hover {
+            background: #3d3d3dff;
+            transform: translateY(-2px);
+            border-color: #9c0000ff;
+        }
+        
+        .social-link img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .learning-list {
+            background: #2d2d2d;
+            border-radius: 8px;
+            border-left: 4px solid #b60000ff;
+            padding: 1.75rem;
+            margin-top: 1rem;
+        }
+        
+        .learning-list ul {
+            color: #d1d5db;
+            padding-left: 1.25rem;
+            margin: 0;
+        }
+        
+        .learning-list li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .learning-list strong {
+            color: #f3f4f6;
+        }
+        
+        .prospects {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        
+        .prospect-tag {
+            background: #2d2d2d;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: #d1d5db;
+            font-size: 0.9rem;
+            border: 1px solid #585858ff;
+        }
+
+        .in-progress-block {
+            background: #383838ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .in-progress-text {
+            margin: 0;
+            color: #9ca3af;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        .intro-text {
+            font-size: 1.1rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 1rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        .skill-card li::marker {
+            color: #b60000ff;
+        }
+
+        .learning-list li::marker {
+            color: #b60000ff;
+        }
+
+        .prospect-tag:hover {
+            background: #3d3d3dff;
+            border-color: #b60000ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        
+        <!-- Приветствие -->
+        <div class="section">
+            <h2 class="section-title">Всем привет, я Саня</h2>
+            <p class="intro-text">
+                Программист на C#/.NET, который учится создавать полезные и интересные проекты. 
+                В моих репозиториях можно найти полезные библиотеки, а в Telegram-канале мемы про разработку.
+            </p>
+        </div>
+        
+        <!-- Социальные сети -->
+        <div class="section">
+            <h2 class="section-title">Социальные сети и профили</h2>
+            <div class="social-links">
+                <a href="https://github.com/san40-u5an40" target="_blank" class="social-link">
+                    <img src="./icons/github.png" alt="GitHub">
+                    <span>GitHub</span>
+                </a>
+                <a href="https://www.nuget.org/profiles/san40_u5an40" target="_blank" class="social-link">
+                    <img src="./icons/nuget.png" alt="NuGet">
+                    <span>NuGet</span>
+                </a>
+                <a href="https://leetcode.com/u/alexandr_dev2011/" target="_blank" class="social-link">
+                    <img src="./icons/leetcode.png" alt="LeetCode">
+                    <span>LeetCode</span>
+                </a>
+                <a href="https://stepik.org/users/519208772/profile" target="_blank" class="social-link">
+                    <img src="./icons/stepik.png" alt="Stepik">
+                    <span>Stepik</span>
+                </a>
+                <a href="https://habr.com/ru/users/alexandr_dev2011/" target="_blank" class="social-link">
+                    <img src="./icons/habr.png" alt="Habr">
+                    <span>Habr</span>
+                </a>
+                <a href="https://t.me/csharp_5an40_u5an40" target="_blank" class="social-link">
+                    <img src="./icons/telegram.png" alt="Telegram">
+                    <span>Telegram-канал</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Навыки -->
+        <div class="section">
+            <h2 class="section-title">Технологии и навыки</h2>
+            <div class="skills-grid">
+                <div class="skill-card card-csharp">
+                    <h3>База .NET/C#</h3>
+                    <ul>
+                        <li>ООП</li>
+                        <li>Generic-типы, в частности ковариативность и контрвариативность</li>
+                        <li>Коллекции</li>
+                        <li>LINQ</li>
+                        <li>Регулярные выражения</li>
+                        <li>Файловый ввод-вывод</li>
+                        <li>Рефлексия</li>
+                        <li>Многопоточность, в частности асинхронность и синхронизация доступа как внутри одного приложения, так и при межпроцессном взаимодействии</li>
+                        <li>Работа с Json-конфигурацией</li>
+                        <li>NuGet-пакеты</li>
+                        <li>HttpClient</li>
+                        <li>NUnit и Moq</li>
+                    </ul>
+                </div>
+                <div class="skill-card card-design">
+                    <h3>Проектирование</h3>
+                    <ul>
+                        <li>Fluent API</li>
+                        <li>SOLID</li>
+                        <li>Паттерны GOF</li>
+                        <li>DI (Dependency Injection)</li>
+                        <li>AAA-паттерн тестирования</li>
+                        <li>DDD</li>
+                        <li>DRY, KISS и YAGNI</li>
+                    </ul>
+                </div>
+                <div class="skill-card card-aspnet">
+                    <h3>ASP.NET Core</h3>
+                    <div class="in-progress-block">
+                        <p class="in-progress-text">
+                            🚧 В процессе изучения
+                        </p>
+                    </div>
+                </div>
+                <div class="skill-card card-ef">
+                    <h3>Entity Framework Core & SQL</h3>
+                    <div class="in-progress-block">
+                        <p class="in-progress-text">
+                            🚧 В процессе изучения
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Обучение -->
+        <div class="section">
+            <h2 class="section-title">Источники обучения</h2>
+            <div class="learning-list">
+                <ul>
+                    <li>
+                        <strong>Теоретический материал</strong> беру с сайтов metanit.com, csharp.webdelphi.ru и ulearn.me, но дополняю его информацией из официальной документации Microsoft, так как местами материал подаётся не так структурно как хотелось бы.
+                    </li>
+                    <li>
+                        <strong>Практические задания</strong> по конкретным темам добираю с открытых курсов на Stepik и часто обращаюсь для их генерации к DeepSeek, алгоритмы иногда тренирую на LeetCode, ну и конечно же не забываю писать Pet-проекты.
+                    </li>
+                    <li>
+                        <strong>Открытые вопросы</strong>, из серии различий между CPU-bound и I/O-bound операциями, или же разнице в синхронизации при помощи оператора lock и класса Mutex, также обсуждаю с DeepSeek. Иногда он очень сильно врёт, поэтому стараюсь перепроверять информацию из поисковика или того же StackOverflow.Ai.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Перспективы -->
+        <div class="section">
+            <h2 class="section-title">Перспективы развития</h2>
+            <div class="prospects">
+                <span class="prospect-tag">Docker</span>
+                <span class="prospect-tag">Kafka</span>
+                <span class="prospect-tag">Redis</span>
+                <span class="prospect-tag">HTML+CSS</span>
+                <span class="prospect-tag">Razor Pages</span>
+                <span class="prospect-tag">MVC</span>
+                <span class="prospect-tag">Blazor</span>
+                <span class="prospect-tag">И многое другое</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
