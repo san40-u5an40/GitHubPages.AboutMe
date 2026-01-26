@@ -414,33 +414,64 @@
       .nav-buttons {
         position: absolute;
         top: 50%;
+        left: 0;
+        right: 0;
         transform: translateY(-50%);
         width: 100%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         padding: 0 20px;
+        z-index: 1002;
         pointer-events: none;
       }
 
       .nav-btn {
-        background: rgba(182, 0, 0, 0.8);
+        background: rgba(182, 0, 0, 0.85);
         color: white;
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         border: none;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         transition: all 0.3s ease;
         pointer-events: all;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       }
 
       .nav-btn:hover {
         background: rgba(212, 0, 0, 1);
         transform: scale(1.1);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      }
+
+      .nav-btn:active {
+        transform: scale(0.95);
+      }
+
+      /* Для мобильных устройств */
+      @media (max-width: 768px) {
+        .nav-buttons {
+          padding: 0 10px;
+        }
+
+        .nav-btn {
+          width: 50px;
+          height: 50px;
+          font-size: 1.3rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .nav-btn {
+          width: 45px;
+          height: 45px;
+          font-size: 1.1rem;
+        }
       }
 
       /* Индикатор загрузки */
@@ -652,12 +683,8 @@
           <h2 class="section-title">
             <i class="fas fa-award"></i> Мои сертификаты
           </h2>
-
           <div class="certificates-grid" id="certificatesGrid">
-            <div class="loading">
-              <div class="spinner"></div>
-              <div class="loading-text">Загрузка сертификатов...</div>
-            </div>
+            <!-- Скрипт вставит карточки -->
           </div>
         </section>
       </div>
@@ -669,16 +696,58 @@
             <i class="fas fa-times"></i>
           </button>
 
+          <!-- Навигационные кнопки -->
           <div class="nav-buttons">
-            <button class="nav-btn prev" id="prevBtn">
+            <button class="nav-btn prev" id="prevBtn" title="Предыдущий (←)">
               <i class="fas fa-chevron-left"></i>
             </button>
-            <button class="nav-btn next" id="nextBtn">
+            <button class="nav-btn next" id="nextBtn" title="Следующий (→)">
               <i class="fas fa-chevron-right"></i>
             </button>
           </div>
 
-          <img class="modal-image" id="modalImage" alt="Сертификат" />
+          <!-- Контейнер для изображения -->
+          <div
+            class="image-container"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              min-height: 400px;
+              background: #1a1a1a;
+              position: relative;
+            "
+          >
+            <img class="modal-image" id="modalImage" alt="Сертификат" />
+
+            <!-- Индикатор загрузки изображения -->
+            <div
+              class="image-loading"
+              id="imageLoading"
+              style="
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #666;
+                font-size: 0.9rem;
+              "
+            >
+              <div
+                class="loading-spinner"
+                style="
+                  width: 30px;
+                  height: 30px;
+                  border: 3px solid #3d3d3d;
+                  border-top-color: #b60000;
+                  border-radius: 50%;
+                  animation: spin 1s linear infinite;
+                  margin: 0 auto 10px auto;
+                "
+              ></div>
+              Загрузка...
+            </div>
+          </div>
 
           <div class="modal-info">
             <h3 class="modal-title" id="modalTitle"></h3>
@@ -686,6 +755,24 @@
             <div class="modal-meta">
               <span class="modal-date" id="modalDate"></span>
               <span class="modal-issuer" id="modalIssuer"></span>
+            </div>
+
+            <!-- Индикатор прогресса -->
+            <div
+              class="progress-indicator"
+              style="
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                margin-top: 20px;
+                padding-top: 15px;
+                border-top: 1px solid #3d3d3d;
+              "
+            >
+              <span id="currentIndex">1</span>
+              <span style="color: #666">из</span>
+              <span id="totalCount">3</span>
             </div>
           </div>
         </div>
@@ -706,6 +793,9 @@
           this.modalDescription = document.getElementById("modalDescription");
           this.modalDate = document.getElementById("modalDate");
           this.modalIssuer = document.getElementById("modalIssuer");
+          this.currentIndexEl = document.getElementById("currentIndex");
+          this.totalCountEl = document.getElementById("totalCount");
+          this.imageLoading = document.getElementById("imageLoading");
 
           // Кнопки
           this.closeBtn = document.getElementById("closeModal");
@@ -855,12 +945,11 @@
           e.preventDefault();
           e.stopPropagation();
 
-          if (this.isNavigating) return;
+          if (this.isNavigating || this.currentIndex <= 0) return;
 
           this.isNavigating = true;
           this.showPrev();
 
-          // Сбрасываем флаг после задержки
           setTimeout(() => {
             this.isNavigating = false;
           }, 300);
@@ -870,12 +959,15 @@
           e.preventDefault();
           e.stopPropagation();
 
-          if (this.isNavigating) return;
+          if (
+            this.isNavigating ||
+            this.currentIndex >= this.certificates.length - 1
+          )
+            return;
 
           this.isNavigating = true;
           this.showNext();
 
-          // Сбрасываем флаг после задержки
           setTimeout(() => {
             this.isNavigating = false;
           }, 300);
@@ -907,12 +999,11 @@
           }
         }
 
-        // ОСНОВНЫЕ МЕТОДЫ
         showPrev() {
           if (this.currentIndex > 0) {
             this.currentIndex--;
             this.updateModal();
-            console.log("Показан предыдущий:", this.currentIndex);
+            console.log("← Предыдущий сертификат:", this.currentIndex + 1);
           }
         }
 
@@ -920,7 +1011,7 @@
           if (this.currentIndex < this.certificates.length - 1) {
             this.currentIndex++;
             this.updateModal();
-            console.log("Показан следующий:", this.currentIndex);
+            console.log("→ Следующий сертификат:", this.currentIndex + 1);
           }
         }
 
@@ -932,12 +1023,32 @@
 
           const cert = this.certificates[this.currentIndex];
 
-          // Проверяем существование элементов
+          // Показываем индикатор загрузки
+          if (this.imageLoading) {
+            this.imageLoading.style.display = "block";
+          }
+
           if (this.modalImage) {
+            // Загружаем изображение с обработчиками
+            this.modalImage.style.opacity = "0";
+            this.modalImage.onload = () => {
+              this.modalImage.style.opacity = "1";
+              if (this.imageLoading) {
+                this.imageLoading.style.display = "none";
+              }
+            };
+            this.modalImage.onerror = () => {
+              if (this.imageLoading) {
+                this.imageLoading.style.display = "none";
+              }
+              console.error("Ошибка загрузки изображения:", cert.imageUrl);
+            };
+
             this.modalImage.src = cert.imageUrl;
             this.modalImage.alt = cert.title;
           }
 
+          // Обновляем текст
           if (this.modalTitle) this.modalTitle.textContent = cert.title;
           if (this.modalDescription)
             this.modalDescription.textContent = cert.description;
@@ -948,14 +1059,28 @@
               : "";
           }
 
+          // Обновляем индикатор прогресса
+          if (this.currentIndexEl) {
+            this.currentIndexEl.textContent = this.currentIndex + 1;
+          }
+          if (this.totalCountEl) {
+            this.totalCountEl.textContent = this.certificates.length;
+          }
+
           // Обновляем состояние кнопок навигации
           if (this.prevBtn && this.nextBtn) {
-            this.prevBtn.style.display =
-              this.currentIndex > 0 ? "flex" : "none";
-            this.nextBtn.style.display =
+            // Левая кнопка - показывать всегда, но менять цвет если нельзя идти дальше
+            this.prevBtn.style.opacity = this.currentIndex > 0 ? "1" : "0.5";
+            this.prevBtn.style.cursor =
+              this.currentIndex > 0 ? "pointer" : "not-allowed";
+
+            // Правая кнопка - аналогично
+            this.nextBtn.style.opacity =
+              this.currentIndex < this.certificates.length - 1 ? "1" : "0.5";
+            this.nextBtn.style.cursor =
               this.currentIndex < this.certificates.length - 1
-                ? "flex"
-                : "none";
+                ? "pointer"
+                : "not-allowed";
           }
         }
 
