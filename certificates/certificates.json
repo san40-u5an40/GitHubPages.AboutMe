@@ -19,7 +19,7 @@
     {
       "id": 3,
       "title": "Инди-курс по HTML и CSS",
-      "description": "Небольший обучающий курс по разработке web-страниц.",
+      "description": "Небольшой обучающий курс по разработке web-страниц.",
       "image": "html_css_mini.jpg",
       "date": "Декабрь 2025",
       "issuer": "Stepik"
