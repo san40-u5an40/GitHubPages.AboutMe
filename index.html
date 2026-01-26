@@ -712,12 +712,11 @@
           this.prevBtn = document.getElementById("prevBtn");
           this.nextBtn = document.getElementById("nextBtn");
 
-          // Флаги для предотвращения множественных кликов
-          this.isNavigating = false;
-          this.navigationDelay = 300; // Задержка между кликами (мс)
-
           // URL для загрузки JSON
           this.jsonUrl = "certificates/certificates.json";
+
+          // Флаг для предотвращения множественных кликов
+          this.isNavigating = false;
 
           this.init();
         }
@@ -726,6 +725,86 @@
           this.bindEvents();
           await this.loadCertificates();
           this.renderGallery();
+        }
+
+        async loadCertificates() {
+          try {
+            console.log("Загружаем сертификаты из:", this.jsonUrl);
+
+            const response = await fetch(this.jsonUrl);
+
+            if (!response.ok) {
+              console.error("Ошибка HTTP:", response.status);
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log("Получены данные:", data);
+
+            if (!data.certificates || !Array.isArray(data.certificates)) {
+              throw new Error(
+                "Invalid JSON format: missing certificates array",
+              );
+            }
+
+            this.certificates = data.certificates.map((cert) => ({
+              id: cert.id || Date.now() + Math.random(),
+              title: cert.title || "Без названия",
+              description: cert.description || "Описание отсутствует",
+              image: cert.image || "",
+              date: cert.date || "Дата не указана",
+              issuer: cert.issuer || "",
+              // Если изображение начинается с http(s), оставляем как есть
+              // Иначе добавляем путь к папке certificates/
+              imageUrl: cert.image.startsWith("http")
+                ? cert.image
+                : `certificates/${cert.image}`,
+            }));
+
+            console.log("Обработанные сертификаты:", this.certificates);
+          } catch (error) {
+            console.error("Ошибка загрузки сертификатов:", error);
+            this.showError(error.message);
+            // Загружаем демо-данные в случае ошибки
+            this.loadFallbackData();
+          }
+        }
+
+        loadFallbackData() {
+          console.log("Загружаем fallback данные");
+          this.certificates = [
+            {
+              id: 1,
+              title: "C# Advanced",
+              description: "Пример сертификата. Проверьте путь к JSON файлу.",
+              imageUrl:
+                "https://images.unsplash.com/photo-16180446125-6acb46d7e5b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+              date: "Декабрь 2023",
+              issuer: "Пример организации",
+            },
+          ];
+        }
+
+        showError(message) {
+          this.grid.innerHTML = `
+                <div class="error-message">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Ошибка загрузки сертификатов</h3>
+                    <p>${message}</p>
+                    <p style="margin-top: 20px;">
+                        <i class="fas fa-info-circle"></i>
+                        Проверьте:<br>
+                        1. Существует ли файл: <code>${this.jsonUrl}</code><br>
+                        2. Правильный ли путь к файлу<br>
+                        3. Корректный ли JSON формат
+                    </p>
+                    <p style="margin-top: 10px; color: #9ca3af;">
+                        Показываем демо-сертификаты...
+                    </p>
+                </div>
+            `;
         }
 
         bindEvents() {
@@ -757,14 +836,11 @@
         }
 
         removeEventListeners() {
-          // Удаляем все обработчики
-          this.closeBtn.removeEventListener("click", this.handleCloseModal);
-          this.modal.removeEventListener("click", this.handleModalClick);
-          this.prevBtn.removeEventListener("click", this.handlePrevClick);
-          this.nextBtn.removeEventListener("click", this.handleNextClick);
-          document.removeEventListener("keydown", this.handleKeyDown);
+          // Метод для очистки обработчиков (если понадобится)
+          // Пока оставляем пустым
         }
 
+        // ОБРАБОТЧИКИ СОБЫТИЙ
         handleModalClick(e) {
           if (e.target === this.modal) {
             this.closeModal();
@@ -787,7 +863,7 @@
           // Сбрасываем флаг после задержки
           setTimeout(() => {
             this.isNavigating = false;
-          }, this.navigationDelay);
+          }, 300);
         }
 
         handleNextClick(e) {
@@ -802,7 +878,7 @@
           // Сбрасываем флаг после задержки
           setTimeout(() => {
             this.isNavigating = false;
-          }, this.navigationDelay);
+          }, 300);
         }
 
         handleKeyDown(e) {
@@ -817,10 +893,7 @@
               if (!this.isNavigating) {
                 this.isNavigating = true;
                 this.showPrev();
-                setTimeout(
-                  () => (this.isNavigating = false),
-                  this.navigationDelay,
-                );
+                setTimeout(() => (this.isNavigating = false), 300);
               }
               break;
             case "ArrowRight":
@@ -828,15 +901,13 @@
               if (!this.isNavigating) {
                 this.isNavigating = true;
                 this.showNext();
-                setTimeout(
-                  () => (this.isNavigating = false),
-                  this.navigationDelay,
-                );
+                setTimeout(() => (this.isNavigating = false), 300);
               }
               break;
           }
         }
 
+        // ОСНОВНЫЕ МЕТОДЫ
         showPrev() {
           if (this.currentIndex > 0) {
             this.currentIndex--;
@@ -885,25 +956,6 @@
               this.currentIndex < this.certificates.length - 1
                 ? "flex"
                 : "none";
-          }
-
-          // Обновляем URL изображения для предзагрузки следующего
-          this.preloadAdjacentImages();
-        }
-
-        preloadAdjacentImages() {
-          // Предзагрузка следующего изображения для плавного перехода
-          if (this.currentIndex < this.certificates.length - 1) {
-            const nextCert = this.certificates[this.currentIndex + 1];
-            const nextImg = new Image();
-            nextImg.src = nextCert.imageUrl;
-          }
-
-          // Предзагрузка предыдущего изображения
-          if (this.currentIndex > 0) {
-            const prevCert = this.certificates[this.currentIndex - 1];
-            const prevImg = new Image();
-            prevImg.src = prevCert.imageUrl;
           }
         }
 
@@ -974,11 +1026,9 @@
             )
             .join("");
 
+          // Добавляем обработчики кликов НА КАЖДЫЙ ЭЛЕМЕНТ
           const cards = this.grid.querySelectorAll(".certificate-card");
           cards.forEach((card) => {
-            // Удаляем старый обработчик
-            card.removeEventListener("click", this.handleCardClick);
-
             // Добавляем новый с привязкой контекста
             card.addEventListener("click", (e) => {
               const index = parseInt(card.dataset.index);
