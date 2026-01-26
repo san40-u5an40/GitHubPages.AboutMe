@@ -1,880 +1,999 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="./icons/siteicon.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="./icons/siteicon.png" />
     <title>Саня - C#/.NET Разработчик</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            color: #e5e7eb;
-            background: #3b0000ff;
-            line-height: 1.5;
-            min-height: 100vh;
-        }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+        color: #e5e7eb;
+        background: #3b0000ff;
+        line-height: 1.5;
+        min-height: 100vh;
+      }
 
+      .profile-container {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+
+      .section {
+        margin-bottom: 2rem;
+      }
+
+      .section-title {
+        color: #f3f4f6;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .section-title::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background: #b60000ff;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .skill-card {
+        background: #2d2d2d;
+        border-radius: 12px;
+        padding: 1.75rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        border-left: 4px solid #b60000ff;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .skill-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+      }
+
+      .skill-card h3 {
+        color: #f9fafb;
+        font-size: 1.3rem;
+        margin: 0 0 1rem 0;
+        padding-left: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .skill-card ul {
+        color: #d1d5db;
+        margin: 0;
+        padding-left: 1.25rem;
+      }
+
+      .skill-card li {
+        margin-bottom: 0.5rem;
+        position: relative;
+      }
+
+      .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-link {
+        display: inline-flex;
+        align-items: center;
+        background: #2d2d2d;
+        padding: 0.75rem 1.25rem;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #f3f4f6;
+        transition: all 0.2s ease;
+        border: 1px solid #585858ff;
+        gap: 0.75rem;
+      }
+
+      .social-link:hover {
+        background: #3d3d3dff;
+        transform: translateY(-2px);
+        border-color: #9c0000ff;
+      }
+
+      .social-link img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .learning-list {
+        background: #2d2d2d;
+        border-radius: 8px;
+        border-left: 4px solid #b60000ff;
+        padding: 1.75rem;
+        margin-top: 1rem;
+      }
+
+      .learning-list ul {
+        color: #d1d5db;
+        padding-left: 1.25rem;
+        margin: 0;
+      }
+
+      .learning-list li {
+        margin-bottom: 0.75rem;
+      }
+
+      .learning-list strong {
+        color: #f3f4f6;
+      }
+
+      .prospects {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+
+      .prospect-tag {
+        background: #2d2d2d;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        color: #d1d5db;
+        font-size: 0.9rem;
+        border: 1px solid #585858ff;
+      }
+
+      .in-progress-block {
+        background: #383838ff;
+        padding: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+        margin-top: 0.5rem;
+      }
+
+      .in-progress-text {
+        margin: 0;
+        color: #9ca3af;
+        font-style: italic;
+        font-size: 1.1rem;
+      }
+
+      .intro-text {
+        font-size: 1.1rem;
+        color: #d1d5db;
+        margin-bottom: 1rem;
+      }
+
+      @media (max-width: 768px) {
         .profile-container {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        a:hover {
-            text-decoration: none;
-        }
-
-        .section {
-            margin-bottom: 2rem;
-        }
-        
-        .section-title {
-            color: #f3f4f6;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #662b2b4d;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .section-title::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: #b60000ff;
-            border-radius: 50%;
-            display: inline-block;
+          padding: 1rem;
         }
 
         .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .skill-card {
-            background: #2d2d2d;
-            border-radius: 12px;
-            padding: 1.75rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-            border-left: 4px solid #b60000ff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .skill-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-        }
-        
-        .skill-card h3 {
-            color: #f9fafb;
-            font-size: 1.3rem;
-            margin: 0 0 1rem 0;
-            padding-left: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .skill-card ul {
-            color: #d1d5db;
-            margin: 0;
-            padding-left: 1.25rem;
-        }
-        
-        .skill-card li {
-            margin-bottom: 0.5rem;
-            position: relative;
+          grid-template-columns: 1fr;
         }
 
         .social-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .social-link {
-            display: inline-flex;
-            align-items: center;
-            background: #2d2d2d;
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #f3f4f6;
-            transition: all 0.2s ease;
-            border: 1px solid #585858ff;
-            gap: 0.75rem;
-        }
-        
-        .social-link:hover {
-            background: #3d3d3dff;
-            transform: translateY(-2px);
-            border-color: #9c0000ff;
-        }
-        
-        .social-link img {
-            width: 24px;
-            height: 24px;
-        }
-
-        .learning-list {
-            background: #2d2d2d;
-            border-radius: 8px;
-            border-left: 4px solid #b60000ff;
-            padding: 1.75rem;
-            margin-top: 1rem;
-        }
-        
-        .learning-list ul {
-            color: #d1d5db;
-            padding-left: 1.25rem;
-            margin: 0;
-        }
-        
-        .learning-list li {
-            margin-bottom: 0.75rem;
-        }
-        
-        .learning-list strong {
-            color: #f3f4f6;
-        }
-        
-        .prospects {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-        
-        .prospect-tag {
-            background: #2d2d2d;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            color: #d1d5db;
-            font-size: 0.9rem;
-            border: 1px solid #585858ff;
-        }
-
-        .in-progress-block {
-            background: #383838ff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            margin-top: 0.5rem;
-        }
-
-        .in-progress-text {
-            margin: 0;
-            color: #9ca3af;
-            font-style: italic;
-            font-size: 1.1rem;
-        }
-
-        .intro-text {
-            font-size: 1.1rem;
-            color: #d1d5db;
-            margin-bottom: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .profile-container {
-                padding: 1rem;
-            }
-            
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .social-links {
-                justify-content: center;
-            }
-            
-            .section-title {
-                font-size: 1.5rem;
-            }
-        }
-
-        .skill-card li::marker {
-            color: #b60000ff;
-        }
-
-        .learning-list li::marker {
-            color: #b60000ff;
-        }
-
-        .prospect-tag:hover {
-            border-color: #b60000ff;
-        }
-
-.certificates-section {
-            margin: 60px 0;
+          justify-content: center;
         }
 
         .section-title {
-            color: #f3f4f6;
-            font-size: 2rem;
-            margin-bottom: 30px;
-            text-align: center;
-            position: relative;
-            padding-bottom: 15px;
+          font-size: 1.5rem;
         }
+      }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: #b60000;
-        }
-        
-        /* Сертификаты */
-        .certificates-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
+      .skill-card li::marker {
+        color: #b60000ff;
+      }
 
-        .certificate-card {
-            background: #2d2d2d;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border: 1px solid #3d3d3d;
-            cursor: pointer;
-        }
+      .learning-list li::marker {
+        color: #b60000ff;
+      }
 
-        .certificate-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(182, 0, 0, 0.2);
-            border-color: #b60000;
-        }
+      .prospect-tag:hover {
+        border-color: #b60000ff;
+      }
 
-        .certificate-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.3s ease;
-        }
+      .certificates-section {
+        margin: 60px 0;
+      }
 
-        .certificate-card:hover .certificate-image {
-            transform: scale(1.05);
-        }
+      .section-title {
+        color: #f3f4f6;
+        font-size: 2rem;
+        margin-bottom: 30px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+      }
 
-        .certificate-info {
-            padding: 20px;
-        }
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: #b60000;
+      }
 
-        .certificate-title {
-            font-size: 1.2rem;
-            color: #f9fafb;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
+      /* Сертификаты */
+      .certificates-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+      }
 
-        .certificate-description {
-            color: #9ca3af;
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-        }
+      .certificate-card {
+        background: #2d2d2d;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid #3d3d3d;
+        cursor: pointer;
+      }
 
-        .certificate-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .certificate-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(182, 0, 0, 0.2);
+        border-color: #b60000;
+      }
 
-        .certificate-date {
-            color: #b60000;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
+      .certificate-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+      }
 
-        .certificate-issuer {
-            color: #6b7280;
-            font-size: 0.85rem;
-            font-style: italic;
-        }
+      .certificate-card:hover .certificate-image {
+        transform: scale(1.05);
+      }
 
-        /* Модальное окно */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px;
-        }
+      .certificate-info {
+        padding: 20px;
+      }
 
-        .modal-overlay.active {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
+      .certificate-title {
+        font-size: 1.2rem;
+        color: #f9fafb;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
 
-        .modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90vh;
-            background: #2d2d2d;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-        }
+      .certificate-description {
+        color: #9ca3af;
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+      }
 
-        .modal-image {
-            width: 100%;
-            height: auto;
-            max-height: 70vh;
-            object-fit: contain;
-            display: block;
-            background: #1a1a1a;
-        }
+      .certificate-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(182, 0, 0, 0.9);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 1001;
-        }
+      .certificate-date {
+        color: #b60000;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
 
-        .close-btn:hover {
-            background: #d40000;
-            transform: rotate(90deg);
-        }
+      .certificate-issuer {
+        color: #6b7280;
+        font-size: 0.85rem;
+        font-style: italic;
+      }
 
-        .modal-info {
-            padding: 25px;
-            background: #2d2d2d;
-        }
+      /* Модальное окно */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.95);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        padding: 20px;
+      }
 
-        .modal-title {
-            color: #f9fafb;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
+      .modal-overlay.active {
+        display: flex;
+        animation: fadeIn 0.3s ease;
+      }
 
-        .modal-description {
-            color: #d1d5db;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
+      .modal-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90vh;
+        background: #2d2d2d;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      }
 
-        .modal-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 15px;
-            border-top: 1px solid #3d3d3d;
-        }
+      .modal-image {
+        width: 100%;
+        height: auto;
+        max-height: 70vh;
+        object-fit: contain;
+        display: block;
+        background: #1a1a1a;
+      }
 
-        .modal-date {
-            color: #b60000;
-            font-weight: 500;
-        }
+      .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(182, 0, 0, 0.9);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 1001;
+      }
 
-        .modal-issuer {
-            color: #6b7280;
-            font-size: 0.95rem;
-        }
+      .close-btn:hover {
+        background: #d40000;
+        transform: rotate(90deg);
+      }
 
-        /* Навигация */
-        .nav-buttons {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
-            pointer-events: none;
-        }
+      .modal-info {
+        padding: 25px;
+        background: #2d2d2d;
+      }
 
-        .nav-btn {
-            background: rgba(182, 0, 0, 0.8);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            pointer-events: all;
-        }
+      .modal-title {
+        color: #f9fafb;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+      }
 
-        .nav-btn:hover {
-            background: rgba(212, 0, 0, 1);
-            transform: scale(1.1);
-        }
+      .modal-description {
+        color: #d1d5db;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
 
-        /* Индикатор загрузки */
-        .loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            grid-column: 1 / -1;
-            padding: 60px;
-            text-align: center;
-        }
+      .modal-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 15px;
+        border-top: 1px solid #3d3d3d;
+      }
 
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #3d3d3d;
-            border-top-color: #b60000;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
+      .modal-date {
+        color: #b60000;
+        font-weight: 500;
+      }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+      .modal-issuer {
+        color: #6b7280;
+        font-size: 0.95rem;
+      }
 
-        /* Сообщения об ошибке */
-        .error-message {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 40px;
-            background: #2d2d2d;
-            border-radius: 10px;
-            border-left: 4px solid #b60000;
-        }
+      /* Навигация */
+      .nav-buttons {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        pointer-events: none;
+      }
 
+      .nav-btn {
+        background: rgba(182, 0, 0, 0.8);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        pointer-events: all;
+      }
+
+      .nav-btn:hover {
+        background: rgba(212, 0, 0, 1);
+        transform: scale(1.1);
+      }
+
+      /* Индикатор загрузки */
+      .loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        grid-column: 1 / -1;
+        padding: 60px;
+        text-align: center;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid #3d3d3d;
+        border-top-color: #b60000;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Сообщения об ошибке */
+      .error-message {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 40px;
+        background: #2d2d2d;
+        border-radius: 10px;
+        border-left: 4px solid #b60000;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="profile-container">
-        
-        <!-- Приветствие -->
-        <div class="section">
-            <h2 class="section-title">Всем привет, я Саня</h2>
-            <p class="intro-text">
-                Программист на C#/.NET, который учится создавать полезные и интересные проекты. 
-                В моих репозиториях можно найти полезные библиотеки, а в Telegram-канале мемы про разработку.
-            </p>
-        </div>
-        
-        <!-- Социальные сети -->
-        <div class="section">
-            <h2 class="section-title">Социальные сети и профили</h2>
-            <div class="social-links">
-                <a href="https://github.com/san40-u5an40" target="_blank" class="social-link">
-                    <img src="./icons/github.png" alt="GitHub">
-                    <span>GitHub</span>
-                </a>
-                <a href="https://www.nuget.org/profiles/san40_u5an40" target="_blank" class="social-link">
-                    <img src="./icons/nuget.png" alt="NuGet">
-                    <span>NuGet</span>
-                </a>
-                <a href="https://leetcode.com/u/alexandr_dev2011/" target="_blank" class="social-link">
-                    <img src="./icons/leetcode.png" alt="LeetCode">
-                    <span>LeetCode</span>
-                </a>
-                <a href="https://stepik.org/users/519208772/profile" target="_blank" class="social-link">
-                    <img src="./icons/stepik.png" alt="Stepik">
-                    <span>Stepik</span>
-                </a>
-                <a href="https://habr.com/ru/users/alexandr_dev2011/" target="_blank" class="social-link">
-                    <img src="./icons/habr.png" alt="Habr">
-                    <span>Habr</span>
-                </a>
-                <a href="https://t.me/csharp_5an40_u5an40" target="_blank" class="social-link">
-                    <img src="./icons/telegram.png" alt="Telegram">
-                    <span>Telegram-канал</span>
-                </a>
-            </div>
-        </div>
+      <!-- Приветствие -->
+      <div class="section">
+        <h2 class="section-title">Всем привет, я Саня</h2>
+        <p class="intro-text">
+          Программист на C#/.NET, который учится создавать полезные и интересные
+          проекты. В моих репозиториях можно найти полезные библиотеки, а в
+          Telegram-канале мемы про разработку.
+        </p>
+      </div>
 
-        <!-- Навыки -->
-        <div class="section">
-            <h2 class="section-title">Технологии и навыки</h2>
-            <div class="skills-grid">
-                <div class="skill-card card-csharp">
-                    <h3>База .NET/C#</h3>
-                    <ul>
-                        <li>ООП</li>
-                        <li>Generic-типы, в частности ковариативность и контрвариативность</li>
-                        <li>Коллекции</li>
-                        <li>LINQ</li>
-                        <li>Регулярные выражения</li>
-                        <li>Файловый ввод-вывод</li>
-                        <li>Рефлексия</li>
-                        <li>Многопоточность, в частности асинхронность и синхронизация доступа как внутри одного приложения, так и при межпроцессном взаимодействии</li>
-                        <li>Работа с Json-конфигурацией</li>
-                        <li>NuGet-пакеты</li>
-                        <li>HttpClient</li>
-                        <li>NUnit и Moq</li>
-                    </ul>
-                </div>
-                <div class="skill-card card-design">
-                    <h3>Проектирование</h3>
-                    <ul>
-                        <li>Fluent API</li>
-                        <li>SOLID</li>
-                        <li>Паттерны GOF</li>
-                        <li>DI (Dependency Injection)</li>
-                        <li>AAA-паттерн тестирования</li>
-                        <li>DDD</li>
-                        <li>DRY, KISS и YAGNI</li>
-                    </ul>
-                </div>
-                <div class="skill-card card-aspnet">
-                    <h3>ASP.NET Core</h3>
-                    <div class="in-progress-block">
-                        <p class="in-progress-text">
-                            🚧 В процессе изучения
-                        </p>
-                    </div>
-                </div>
-                <div class="skill-card card-ef">
-                    <h3>Entity Framework Core & SQL</h3>
-                    <div class="in-progress-block">
-                        <p class="in-progress-text">
-                            🚧 В процессе изучения
-                        </p>
-                    </div>
-                </div>
-            </div>
+      <!-- Социальные сети -->
+      <div class="section">
+        <h2 class="section-title">Социальные сети и профили</h2>
+        <div class="social-links">
+          <a
+            href="https://github.com/san40-u5an40"
+            target="_blank"
+            class="social-link"
+          >
+            <img src="./icons/github.png" alt="GitHub" />
+            <span>GitHub</span>
+          </a>
+          <a
+            href="https://www.nuget.org/profiles/san40_u5an40"
+            target="_blank"
+            class="social-link"
+          >
+            <img src="./icons/nuget.png" alt="NuGet" />
+            <span>NuGet</span>
+          </a>
+          <a
+            href="https://leetcode.com/u/alexandr_dev2011/"
+            target="_blank"
+            class="social-link"
+          >
+            <img src="./icons/leetcode.png" alt="LeetCode" />
+            <span>LeetCode</span>
+          </a>
+          <a
+            href="https://stepik.org/users/519208772/profile"
+            target="_blank"
+            class="social-link"
+          >
+            <img src="./icons/stepik.png" alt="Stepik" />
+            <span>Stepik</span>
+          </a>
+          <a
+            href="https://habr.com/ru/users/alexandr_dev2011/"
+            target="_blank"
+            class="social-link"
+          >
+            <img src="./icons/habr.png" alt="Habr" />
+            <span>Habr</span>
+          </a>
+          <a
+            href="https://t.me/csharp_5an40_u5an40"
+            target="_blank"
+            class="social-link"
+          >
+            <img src="./icons/telegram.png" alt="Telegram" />
+            <span>Telegram-канал</span>
+          </a>
         </div>
+      </div>
 
-        <!-- Обучение -->
-        <div class="section">
-            <h2 class="section-title">Источники обучения</h2>
-            <div class="learning-list">
-                <ul>
-                    <li>
-                        <strong>Теоретический материал</strong> беру с сайтов metanit.com, csharp.webdelphi.ru и ulearn.me, но дополняю его информацией из официальной документации Microsoft, так как местами материал подаётся не так структурно как хотелось бы.
-                    </li>
-                    <li>
-                        <strong>Практические задания</strong> по конкретным темам добираю с открытых курсов на Stepik и часто обращаюсь для их генерации к DeepSeek, алгоритмы иногда тренирую на LeetCode, ну и конечно же не забываю писать Pet-проекты.
-                    </li>
-                    <li>
-                        <strong>Открытые вопросы</strong>, из серии различий между CPU-bound и I/O-bound операциями, или же разнице в синхронизации при помощи оператора lock и класса Mutex, также обсуждаю с DeepSeek. Иногда он очень сильно врёт, поэтому стараюсь перепроверять информацию из поисковика или того же StackOverflow.Ai.
-                    </li>
-                </ul>
+      <!-- Навыки -->
+      <div class="section">
+        <h2 class="section-title">Технологии и навыки</h2>
+        <div class="skills-grid">
+          <div class="skill-card card-csharp">
+            <h3>База .NET/C#</h3>
+            <ul>
+              <li>ООП</li>
+              <li>
+                Generic-типы, в частности ковариативность и контрвариативность
+              </li>
+              <li>Коллекции</li>
+              <li>LINQ</li>
+              <li>Регулярные выражения</li>
+              <li>Файловый ввод-вывод</li>
+              <li>Рефлексия</li>
+              <li>
+                Многопоточность, в частности асинхронность и синхронизация
+                доступа как внутри одного приложения, так и при межпроцессном
+                взаимодействии
+              </li>
+              <li>Работа с Json-конфигурацией</li>
+              <li>NuGet-пакеты</li>
+              <li>HttpClient</li>
+              <li>NUnit и Moq</li>
+            </ul>
+          </div>
+          <div class="skill-card card-design">
+            <h3>Проектирование</h3>
+            <ul>
+              <li>Fluent API</li>
+              <li>SOLID</li>
+              <li>Паттерны GOF</li>
+              <li>DI (Dependency Injection)</li>
+              <li>AAA-паттерн тестирования</li>
+              <li>DDD</li>
+              <li>DRY, KISS и YAGNI</li>
+            </ul>
+          </div>
+          <div class="skill-card card-aspnet">
+            <h3>ASP.NET Core</h3>
+            <div class="in-progress-block">
+              <p class="in-progress-text">🚧 В процессе изучения</p>
             </div>
-        </div>
-
-        <!-- Перспективы -->
-        <div class="section">
-            <h2 class="section-title">Перспективы развития</h2>
-            <div class="prospects">
-                <span class="prospect-tag">Docker</span>
-                <span class="prospect-tag">Kafka</span>
-                <span class="prospect-tag">Redis</span>
-                <span class="prospect-tag">HTML+CSS</span>
-                <span class="prospect-tag">Razor Pages</span>
-                <span class="prospect-tag">MVC</span>
-                <span class="prospect-tag">Blazor</span>
-                <span class="prospect-tag">И многое другое</span>
+          </div>
+          <div class="skill-card card-ef">
+            <h3>Entity Framework Core & SQL</h3>
+            <div class="in-progress-block">
+              <p class="in-progress-text">🚧 В процессе изучения</p>
             </div>
+          </div>
         </div>
+      </div>
 
-    <!-- Блок с сертификатами -->
-    <div class="container">
+      <!-- Обучение -->
+      <div class="section">
+        <h2 class="section-title">Источники обучения</h2>
+        <div class="learning-list">
+          <ul>
+            <li>
+              <strong>Теоретический материал</strong> беру с сайтов metanit.com,
+              csharp.webdelphi.ru и ulearn.me, но дополняю его информацией из
+              официальной документации Microsoft, так как местами материал
+              подаётся не так структурно как хотелось бы.
+            </li>
+            <li>
+              <strong>Практические задания</strong> по конкретным темам добираю
+              с открытых курсов на Stepik и часто обращаюсь для их генерации к
+              DeepSeek, алгоритмы иногда тренирую на LeetCode, ну и конечно же
+              не забываю писать Pet-проекты.
+            </li>
+            <li>
+              <strong>Открытые вопросы</strong>, из серии различий между
+              CPU-bound и I/O-bound операциями, или же разнице в синхронизации
+              при помощи оператора lock и класса Mutex, также обсуждаю с
+              DeepSeek. Иногда он очень сильно врёт, поэтому стараюсь
+              перепроверять информацию из поисковика или того же
+              StackOverflow.Ai.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Перспективы -->
+      <div class="section">
+        <h2 class="section-title">Перспективы развития</h2>
+        <div class="prospects">
+          <span class="prospect-tag">Docker</span>
+          <span class="prospect-tag">Kafka</span>
+          <span class="prospect-tag">Redis</span>
+          <span class="prospect-tag">HTML+CSS</span>
+          <span class="prospect-tag">Razor Pages</span>
+          <span class="prospect-tag">MVC</span>
+          <span class="prospect-tag">Blazor</span>
+          <span class="prospect-tag">И многое другое</span>
+        </div>
+      </div>
+
+      <!-- Блок с сертификатами -->
+      <div class="container">
         <section class="certificates-section">
-            <h2 class="section-title">
-                <i class="fas fa-award"></i> Мои сертификаты
-            </h2>
-            
-            <div class="certificates-grid" id="certificatesGrid">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <div class="loading-text">Загрузка сертификатов...</div>
-                </div>
+          <h2 class="section-title">
+            <i class="fas fa-award"></i> Мои сертификаты
+          </h2>
+
+          <div class="certificates-grid" id="certificatesGrid">
+            <div class="loading">
+              <div class="spinner"></div>
+              <div class="loading-text">Загрузка сертификатов...</div>
             </div>
+          </div>
         </section>
-    </div>
-    
-    <!-- Модальное окно для просмотра -->
-    <div class="modal-overlay" id="imageModal">
+      </div>
+
+      <!-- Модальное окно для просмотра -->
+      <div class="modal-overlay" id="imageModal">
         <div class="modal-content">
-            <button class="close-btn" id="closeModal">
-                <i class="fas fa-times"></i>
+          <button class="close-btn" id="closeModal">
+            <i class="fas fa-times"></i>
+          </button>
+
+          <div class="nav-buttons">
+            <button class="nav-btn prev" id="prevBtn">
+              <i class="fas fa-chevron-left"></i>
             </button>
-            
-            <div class="nav-buttons">
-                <button class="nav-btn prev" id="prevBtn">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="nav-btn next" id="nextBtn">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+            <button class="nav-btn next" id="nextBtn">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <img class="modal-image" id="modalImage" alt="Сертификат" />
+
+          <div class="modal-info">
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <p class="modal-description" id="modalDescription"></p>
+            <div class="modal-meta">
+              <span class="modal-date" id="modalDate"></span>
+              <span class="modal-issuer" id="modalIssuer"></span>
             </div>
-            
-            <img class="modal-image" id="modalImage" alt="Сертификат">
-            
-            <div class="modal-info">
-                <h3 class="modal-title" id="modalTitle"></h3>
-                <p class="modal-description" id="modalDescription"></p>
-                <div class="modal-meta">
-                    <span class="modal-date" id="modalDate"></span>
-                    <span class="modal-issuer" id="modalIssuer"></span>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
+      </div>
     </div>
 
     <script>
-        class CertificateGallery {
-            constructor() {
-                this.certificates = [];
-                this.currentIndex = 0;
-                
-                // Элементы DOM
-                this.grid = document.getElementById('certificatesGrid');
-                this.modal = document.getElementById('imageModal');
-                this.modalImage = document.getElementById('modalImage');
-                this.modalTitle = document.getElementById('modalTitle');
-                this.modalDescription = document.getElementById('modalDescription');
-                this.modalDate = document.getElementById('modalDate');
-                this.modalIssuer = document.getElementById('modalIssuer');
-                
-                // Кнопки
-                this.closeBtn = document.getElementById('closeModal');
-                this.prevBtn = document.getElementById('prevBtn');
-                this.nextBtn = document.getElementById('nextBtn');
-                this.jsonUrl = 'certificates/certificates.json';
-                
-                this.init();
-            }
-            
-            async init() {
-                this.bindEvents();
-                await this.loadCertificates();
-                this.renderGallery();
-            }
-            
-            bindEvents() {
-                // Закрытие модального окна
-                this.closeBtn.addEventListener('click', () => this.closeModal());
-                this.modal.addEventListener('click', (e) => {
-                    if (e.target === this.modal) this.closeModal();
-                });
-                
-                // Навигация
-                this.prevBtn.addEventListener('click', () => this.showPrev());
-                this.nextBtn.addEventListener('click', () => this.showNext());
-                
-                // Клавиши клавиатуры
-                document.addEventListener('keydown', (e) => {
-                    if (!this.modal.classList.contains('active')) return;
-                    
-                    switch(e.key) {
-                        case 'Escape': this.closeModal(); break;
-                        case 'ArrowLeft': this.showPrev(); break;
-                        case 'ArrowRight': this.showNext(); break;
-                    }
-                });
-            }
-            
-            async loadCertificates() {
-                try {
-                    console.log('Загружаем сертификаты из:', this.jsonUrl);
-                    
-                    const response = await fetch(this.jsonUrl);
-                    
-                    if (!response.ok) {
-                        console.error('Ошибка HTTP:', response.status);
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    console.log('Получены данные:', data);
-                    
-                    if (!data.certificates || !Array.isArray(data.certificates)) {
-                        throw new Error('Invalid JSON format: missing certificates array');
-                    }
-                    
-                    this.certificates = data.certificates.map(cert => ({
-                        id: cert.id || Date.now() + Math.random(),
-                        title: cert.title || 'Без названия',
-                        description: cert.description || 'Описание отсутствует',
-                        image: cert.image || '',
-                        date: cert.date || 'Дата не указана',
-                        issuer: cert.issuer || '',
-                        // Если изображение начинается с http(s), оставляем как есть
-                        // Иначе добавляем путь к папке certificates/
-                        imageUrl: cert.image.startsWith('http') ? 
-                                 cert.image : 
-                                 `certificates/${cert.image}`
-                    }));
-                    
-                    console.log('Обработанные сертификаты:', this.certificates);
-                    
-                } catch (error) {
-                    console.error('Ошибка загрузки сертификатов:', error);
-                    this.showError(error.message);
-                    // Загружаем демо-данные в случае ошибки
-                    this.loadFallbackData();
-                }
-            }
-            
-            loadFallbackData() {
-                console.log('Загружаем fallback данные');
-                this.certificates = [
-                    {
-                        id: 1,
-                        title: "C# Advanced",
-                        description: "Пример сертификата. Проверьте путь к JSON файлу.",
-                        imageUrl: "https://images.unsplash.com/photo-16180446125-6acb46d7e5b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        date: "Декабрь 2023",
-                        issuer: "Пример организации"
-                    }
-                ];
-            }
-            
-            showError(message) {
-                this.grid.innerHTML = `
+      class CertificateGallery {
+        constructor() {
+          this.certificates = [];
+          this.currentIndex = 0;
+
+          // Элементы DOM
+          this.grid = document.getElementById("certificatesGrid");
+          this.modal = document.getElementById("imageModal");
+          this.modalImage = document.getElementById("modalImage");
+          this.modalTitle = document.getElementById("modalTitle");
+          this.modalDescription = document.getElementById("modalDescription");
+          this.modalDate = document.getElementById("modalDate");
+          this.modalIssuer = document.getElementById("modalIssuer");
+
+          // Кнопки
+          this.closeBtn = document.getElementById("closeModal");
+          this.prevBtn = document.getElementById("prevBtn");
+          this.nextBtn = document.getElementById("nextBtn");
+
+          // Флаги для предотвращения множественных кликов
+          this.isNavigating = false;
+          this.navigationDelay = 300; // Задержка между кликами (мс)
+
+          // URL для загрузки JSON
+          this.jsonUrl = "certificates/certificates.json";
+
+          this.init();
+        }
+
+        async init() {
+          this.bindEvents();
+          await this.loadCertificates();
+          this.renderGallery();
+        }
+
+        bindEvents() {
+          // Удаляем старые обработчики перед добавлением новых
+          this.removeEventListeners();
+
+          // Закрытие модального окна
+          this.closeBtn.addEventListener(
+            "click",
+            this.handleCloseModal.bind(this),
+          );
+          this.modal.addEventListener(
+            "click",
+            this.handleModalClick.bind(this),
+          );
+
+          // Навигация - используем bind чтобы сохранить контекст
+          this.prevBtn.addEventListener(
+            "click",
+            this.handlePrevClick.bind(this),
+          );
+          this.nextBtn.addEventListener(
+            "click",
+            this.handleNextClick.bind(this),
+          );
+
+          // Клавиши клавиатуры
+          document.addEventListener("keydown", this.handleKeyDown.bind(this));
+        }
+
+        removeEventListeners() {
+          // Удаляем все обработчики
+          this.closeBtn.removeEventListener("click", this.handleCloseModal);
+          this.modal.removeEventListener("click", this.handleModalClick);
+          this.prevBtn.removeEventListener("click", this.handlePrevClick);
+          this.nextBtn.removeEventListener("click", this.handleNextClick);
+          document.removeEventListener("keydown", this.handleKeyDown);
+        }
+
+        handleModalClick(e) {
+          if (e.target === this.modal) {
+            this.closeModal();
+          }
+        }
+
+        handleCloseModal() {
+          this.closeModal();
+        }
+
+        handlePrevClick(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (this.isNavigating) return;
+
+          this.isNavigating = true;
+          this.showPrev();
+
+          // Сбрасываем флаг после задержки
+          setTimeout(() => {
+            this.isNavigating = false;
+          }, this.navigationDelay);
+        }
+
+        handleNextClick(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (this.isNavigating) return;
+
+          this.isNavigating = true;
+          this.showNext();
+
+          // Сбрасываем флаг после задержки
+          setTimeout(() => {
+            this.isNavigating = false;
+          }, this.navigationDelay);
+        }
+
+        handleKeyDown(e) {
+          if (!this.modal.classList.contains("active")) return;
+
+          switch (e.key) {
+            case "Escape":
+              this.closeModal();
+              break;
+            case "ArrowLeft":
+              e.preventDefault();
+              if (!this.isNavigating) {
+                this.isNavigating = true;
+                this.showPrev();
+                setTimeout(
+                  () => (this.isNavigating = false),
+                  this.navigationDelay,
+                );
+              }
+              break;
+            case "ArrowRight":
+              e.preventDefault();
+              if (!this.isNavigating) {
+                this.isNavigating = true;
+                this.showNext();
+                setTimeout(
+                  () => (this.isNavigating = false),
+                  this.navigationDelay,
+                );
+              }
+              break;
+          }
+        }
+
+        showPrev() {
+          if (this.currentIndex > 0) {
+            this.currentIndex--;
+            this.updateModal();
+            console.log("Показан предыдущий:", this.currentIndex);
+          }
+        }
+
+        showNext() {
+          if (this.currentIndex < this.certificates.length - 1) {
+            this.currentIndex++;
+            this.updateModal();
+            console.log("Показан следующий:", this.currentIndex);
+          }
+        }
+
+        updateModal() {
+          if (!this.certificates || this.certificates.length === 0) {
+            console.error("Нет сертификатов для отображения");
+            return;
+          }
+
+          const cert = this.certificates[this.currentIndex];
+
+          // Проверяем существование элементов
+          if (this.modalImage) {
+            this.modalImage.src = cert.imageUrl;
+            this.modalImage.alt = cert.title;
+          }
+
+          if (this.modalTitle) this.modalTitle.textContent = cert.title;
+          if (this.modalDescription)
+            this.modalDescription.textContent = cert.description;
+          if (this.modalDate) this.modalDate.textContent = cert.date;
+          if (this.modalIssuer) {
+            this.modalIssuer.textContent = cert.issuer
+              ? `Выдан: ${cert.issuer}`
+              : "";
+          }
+
+          // Обновляем состояние кнопок навигации
+          if (this.prevBtn && this.nextBtn) {
+            this.prevBtn.style.display =
+              this.currentIndex > 0 ? "flex" : "none";
+            this.nextBtn.style.display =
+              this.currentIndex < this.certificates.length - 1
+                ? "flex"
+                : "none";
+          }
+
+          // Обновляем URL изображения для предзагрузки следующего
+          this.preloadAdjacentImages();
+        }
+
+        preloadAdjacentImages() {
+          // Предзагрузка следующего изображения для плавного перехода
+          if (this.currentIndex < this.certificates.length - 1) {
+            const nextCert = this.certificates[this.currentIndex + 1];
+            const nextImg = new Image();
+            nextImg.src = nextCert.imageUrl;
+          }
+
+          // Предзагрузка предыдущего изображения
+          if (this.currentIndex > 0) {
+            const prevCert = this.certificates[this.currentIndex - 1];
+            const prevImg = new Image();
+            prevImg.src = prevCert.imageUrl;
+          }
+        }
+
+        openModal(index) {
+          console.log("Открытие модального окна, индекс:", index);
+
+          // Проверяем валидность индекса
+          if (index < 0 || index >= this.certificates.length) {
+            console.error("Неверный индекс сертификата:", index);
+            return;
+          }
+
+          this.currentIndex = index;
+          this.updateModal();
+
+          if (this.modal) {
+            this.modal.classList.add("active");
+            document.body.style.overflow = "hidden";
+            console.log("Модальное окно открыто");
+          }
+        }
+
+        closeModal() {
+          if (this.modal) {
+            this.modal.classList.remove("active");
+            document.body.style.overflow = "auto";
+            console.log("Модальное окно закрыто");
+          }
+        }
+
+        renderGallery() {
+          if (this.certificates.length === 0) {
+            this.grid.innerHTML = `
                     <div class="error-message">
-                        <div class="error-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <h3>Ошибка загрузки сертификатов</h3>
-                        <p>${message}</p>
-                        <p style="margin-top: 20px;">
-                            <i class="fas fa-info-circle"></i>
-                            Проверьте:<br>
-                            1. Существует ли файл: <code>${this.jsonUrl}</code><br>
-                            2. Правильный ли путь к файлу<br>
-                            3. Корректный ли JSON формат
-                        </p>
-                        <p style="margin-top: 10px; color: #9ca3af;">
-                            Показываем демо-сертификаты...
-                        </p>
+                        <i class="fas fa-folder-open" style="font-size: 3rem; color: #6b7280; margin-bottom: 20px;"></i>
+                        <h3>Сертификаты не найдены</h3>
+                        <p>Добавьте сертификаты в JSON файл или проверьте его формат.</p>
                     </div>
                 `;
-            }
-            
-            renderGallery() {
-                if (this.certificates.length === 0) {
-                    this.grid.innerHTML = `
-                        <div class="error-message">
-                            <i class="fas fa-folder-open" style="font-size: 3rem; color: #6b7280; margin-bottom: 20px;"></i>
-                            <h3>Сертификаты не найдены</h3>
-                            <p>Добавьте сертификаты в JSON файл или проверьте его формат.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                this.grid.innerHTML = this.certificates.map((cert, index) => `
-                    <div class="certificate-card" data-index="${index}">
-                        <img src="${cert.imageUrl}" 
-                             alt="${cert.title}" 
-                             class="certificate-image"
-                             loading="lazy"
-                             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300/2d2d2d/666?text=Изображение+не+загружено'">
-                        <div class="certificate-info">
-                            <h3 class="certificate-title">${cert.title}</h3>
-                            <p class="certificate-description">
-                                ${cert.description.length > 100 ? 
-                                  cert.description.substring(0, 100) + '...' : 
-                                  cert.description}
-                            </p>
-                            <div class="certificate-meta">
-                                <span class="certificate-date">${cert.date}</span>
-                                ${cert.issuer ? `<span class="certificate-issuer">${cert.issuer}</span>` : ''}
-                            </div>
+            return;
+          }
+
+          this.grid.innerHTML = this.certificates
+            .map(
+              (cert, index) => `
+                <div class="certificate-card" data-index="${index}">
+                    <img src="${cert.imageUrl}" 
+                         alt="${cert.title}" 
+                         class="certificate-image"
+                         loading="lazy"
+                         onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300/2d2d2d/666?text=Изображение+не+загружено'">
+                    <div class="certificate-info">
+                        <h3 class="certificate-title">${cert.title}</h3>
+                        <p class="certificate-description">
+                            ${
+                              cert.description.length > 100
+                                ? cert.description.substring(0, 100) + "..."
+                                : cert.description
+                            }
+                        </p>
+                        <div class="certificate-meta">
+                            <span class="certificate-date">${cert.date}</span>
+                            ${cert.issuer ? `<span class="certificate-issuer">${cert.issuer}</span>` : ""}
                         </div>
                     </div>
-                `).join('');
-                
-                // Добавляем обработчики кликов
-                document.querySelectorAll('.certificate-card').forEach(card => {
-                    card.addEventListener('click', (e) => {
-                        const index = parseInt(card.dataset.index);
-                        this.openModal(index);
-                    });
-                });
-                
-                console.log(`Отображено ${this.certificates.length} сертификатов`);
-            }
-            
-            openModal(index) {
-                this.currentIndex = index;
-                this.updateModal();
-                this.modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-            
-            updateModal() {
-                const cert = this.certificates[this.currentIndex];
-                
-                this.modalImage.src = cert.imageUrl;
-                this.modalImage.alt = cert.title;
-                this.modalTitle.textContent = cert.title;
-                this.modalDescription.textContent = cert.description;
-                this.modalDate.textContent = cert.date;
-                this.modalIssuer.textContent = cert.issuer ? `Выдан: ${cert.issuer}` : '';
-                
-                // Показываем/скрываем кнопки навигации
-                this.prevBtn.style.display = this.currentIndex > 0 ? 'flex' : 'none';
-                this.nextBtn.style.display = this.currentIndex < this.certificates.length - 1 ? 'flex' : 'none';
-            }
-            
-            closeModal() {
-                this.modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-            
-            showPrev() {
-                if (this.currentIndex > 0) {
-                    this.currentIndex--;
-                    this.updateModal();
-                }
-            }
-            
-            showNext() {
-                if (this.currentIndex < this.certificates.length - 1) {
-                    this.currentIndex++;
-                    this.updateModal();
-                }
-            }
+                </div>
+            `,
+            )
+            .join("");
+
+          const cards = this.grid.querySelectorAll(".certificate-card");
+          cards.forEach((card) => {
+            // Удаляем старый обработчик
+            card.removeEventListener("click", this.handleCardClick);
+
+            // Добавляем новый с привязкой контекста
+            card.addEventListener("click", (e) => {
+              const index = parseInt(card.dataset.index);
+              console.log("Клик по карточке, индекс:", index);
+              this.openModal(index);
+            });
+          });
         }
-        
-        // Инициализация галереи при загрузке страницы
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM загружен, инициализируем галерею...');
-            new CertificateGallery();
-        });
+      }
+
+      // Инициализация галереи
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("DOM загружен, инициализируем галерею сертификатов...");
+        window.certGallery = new CertificateGallery();
+      });
     </script>
-</body>
+  </body>
 </html>
