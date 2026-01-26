@@ -1,0 +1,28 @@
+{
+  "certificates": [
+    {
+      "id": 1,
+      "title": "C# Advanced Certification",
+      "description": "Сертификат о прохождении продвинутого курса по C#. Освоены темы: многопоточность, рефлексия, оптимизация производительности, паттерны проектирования.",
+      "image": "csharp-certificate.jpg",
+      "date": "Декабрь 2023",
+      "issuer": "Microsoft Learn"
+    },
+    {
+      "id": 2,
+      "title": "ASP.NET Core Web API Mastery",
+      "description": "Сертификат о создании RESTful API с использованием ASP.NET Core. Включает аутентификацию JWT, авторизацию, Middleware и работу с Entity Framework Core.",
+      "image": "aspnet-certificate.jpg",
+      "date": "Ноябрь 2023",
+      "issuer": "Pluralsight"
+    },
+    {
+      "id": 3,
+      "title": "Entity Framework Core Expert",
+      "description": "Сертификат о глубоком изучении Entity Framework Core. Миграции, производительность, сложные запросы, оптимизация и работа с сырыми SQL запросами.",
+      "image": "efcore-certificate.jpg",
+      "date": "Октябрь 2023",
+      "issuer": "Udemy"
+    }
+  ]
+}

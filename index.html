@@ -214,6 +214,268 @@
         .prospect-tag:hover {
             border-color: #b60000ff;
         }
+
+.certificates-section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            color: #f3f4f6;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: #b60000;
+        }
+        
+        /* Сертификаты */
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .certificate-card {
+            background: #2d2d2d;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #3d3d3d;
+            cursor: pointer;
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(182, 0, 0, 0.2);
+            border-color: #b60000;
+        }
+
+        .certificate-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .certificate-card:hover .certificate-image {
+            transform: scale(1.05);
+        }
+
+        .certificate-info {
+            padding: 20px;
+        }
+
+        .certificate-title {
+            font-size: 1.2rem;
+            color: #f9fafb;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .certificate-description {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .certificate-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .certificate-date {
+            color: #b60000;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .certificate-issuer {
+            color: #6b7280;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        /* Модальное окно */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            background: #2d2d2d;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
+            background: #1a1a1a;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(182, 0, 0, 0.9);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .close-btn:hover {
+            background: #d40000;
+            transform: rotate(90deg);
+        }
+
+        .modal-info {
+            padding: 25px;
+            background: #2d2d2d;
+        }
+
+        .modal-title {
+            color: #f9fafb;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-description {
+            color: #d1d5db;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .modal-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #3d3d3d;
+        }
+
+        .modal-date {
+            color: #b60000;
+            font-weight: 500;
+        }
+
+        .modal-issuer {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        /* Навигация */
+        .nav-buttons {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            pointer-events: none;
+        }
+
+        .nav-btn {
+            background: rgba(182, 0, 0, 0.8);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            pointer-events: all;
+        }
+
+        .nav-btn:hover {
+            background: rgba(212, 0, 0, 1);
+            transform: scale(1.1);
+        }
+
+        /* Индикатор загрузки */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            grid-column: 1 / -1;
+            padding: 60px;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #3d3d3d;
+            border-top-color: #b60000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Сообщения об ошибке */
+        .error-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            background: #2d2d2d;
+            border-radius: 10px;
+            border-left: 4px solid #b60000;
+        }
+
     </style>
 </head>
 <body>
@@ -344,5 +606,276 @@
             </div>
         </div>
     </div>
+
+    <!-- Блок с сертификатами -->
+    <div class="container">
+        <section class="certificates-section">
+            <h2 class="section-title">
+                <i class="fas fa-award"></i> Мои сертификаты
+            </h2>
+            
+            <div class="certificates-grid" id="certificatesGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Загрузка сертификатов...</div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Модальное окно для просмотра -->
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal-content">
+            <button class="close-btn" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="nav-buttons">
+                <button class="nav-btn prev" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="nav-btn next" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <img class="modal-image" id="modalImage" alt="Сертификат">
+            
+            <div class="modal-info">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <p class="modal-description" id="modalDescription"></p>
+                <div class="modal-meta">
+                    <span class="modal-date" id="modalDate"></span>
+                    <span class="modal-issuer" id="modalIssuer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class CertificateGallery {
+            constructor() {
+                this.certificates = [];
+                this.currentIndex = 0;
+                
+                // Элементы DOM
+                this.grid = document.getElementById('certificatesGrid');
+                this.modal = document.getElementById('imageModal');
+                this.modalImage = document.getElementById('modalImage');
+                this.modalTitle = document.getElementById('modalTitle');
+                this.modalDescription = document.getElementById('modalDescription');
+                this.modalDate = document.getElementById('modalDate');
+                this.modalIssuer = document.getElementById('modalIssuer');
+                
+                // Кнопки
+                this.closeBtn = document.getElementById('closeModal');
+                this.prevBtn = document.getElementById('prevBtn');
+                this.nextBtn = document.getElementById('nextBtn');
+                this.jsonUrl = 'certificates/certificates.json';
+                
+                this.init();
+            }
+            
+            async init() {
+                this.bindEvents();
+                await this.loadCertificates();
+                this.renderGallery();
+            }
+            
+            bindEvents() {
+                // Закрытие модального окна
+                this.closeBtn.addEventListener('click', () => this.closeModal());
+                this.modal.addEventListener('click', (e) => {
+                    if (e.target === this.modal) this.closeModal();
+                });
+                
+                // Навигация
+                this.prevBtn.addEventListener('click', () => this.showPrev());
+                this.nextBtn.addEventListener('click', () => this.showNext());
+                
+                // Клавиши клавиатуры
+                document.addEventListener('keydown', (e) => {
+                    if (!this.modal.classList.contains('active')) return;
+                    
+                    switch(e.key) {
+                        case 'Escape': this.closeModal(); break;
+                        case 'ArrowLeft': this.showPrev(); break;
+                        case 'ArrowRight': this.showNext(); break;
+                    }
+                });
+            }
+            
+            async loadCertificates() {
+                try {
+                    console.log('Загружаем сертификаты из:', this.jsonUrl);
+                    
+                    const response = await fetch(this.jsonUrl);
+                    
+                    if (!response.ok) {
+                        console.error('Ошибка HTTP:', response.status);
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    console.log('Получены данные:', data);
+                    
+                    if (!data.certificates || !Array.isArray(data.certificates)) {
+                        throw new Error('Invalid JSON format: missing certificates array');
+                    }
+                    
+                    this.certificates = data.certificates.map(cert => ({
+                        id: cert.id || Date.now() + Math.random(),
+                        title: cert.title || 'Без названия',
+                        description: cert.description || 'Описание отсутствует',
+                        image: cert.image || '',
+                        date: cert.date || 'Дата не указана',
+                        issuer: cert.issuer || '',
+                        // Если изображение начинается с http(s), оставляем как есть
+                        // Иначе добавляем путь к папке certificates/
+                        imageUrl: cert.image.startsWith('http') ? 
+                                 cert.image : 
+                                 `certificates/${cert.image}`
+                    }));
+                    
+                    console.log('Обработанные сертификаты:', this.certificates);
+                    
+                } catch (error) {
+                    console.error('Ошибка загрузки сертификатов:', error);
+                    this.showError(error.message);
+                    // Загружаем демо-данные в случае ошибки
+                    this.loadFallbackData();
+                }
+            }
+            
+            loadFallbackData() {
+                console.log('Загружаем fallback данные');
+                this.certificates = [
+                    {
+                        id: 1,
+                        title: "C# Advanced",
+                        description: "Пример сертификата. Проверьте путь к JSON файлу.",
+                        imageUrl: "https://images.unsplash.com/photo-16180446125-6acb46d7e5b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        date: "Декабрь 2023",
+                        issuer: "Пример организации"
+                    }
+                ];
+            }
+            
+            showError(message) {
+                this.grid.innerHTML = `
+                    <div class="error-message">
+                        <div class="error-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3>Ошибка загрузки сертификатов</h3>
+                        <p>${message}</p>
+                        <p style="margin-top: 20px;">
+                            <i class="fas fa-info-circle"></i>
+                            Проверьте:<br>
+                            1. Существует ли файл: <code>${this.jsonUrl}</code><br>
+                            2. Правильный ли путь к файлу<br>
+                            3. Корректный ли JSON формат
+                        </p>
+                        <p style="margin-top: 10px; color: #9ca3af;">
+                            Показываем демо-сертификаты...
+                        </p>
+                    </div>
+                `;
+            }
+            
+            renderGallery() {
+                if (this.certificates.length === 0) {
+                    this.grid.innerHTML = `
+                        <div class="error-message">
+                            <i class="fas fa-folder-open" style="font-size: 3rem; color: #6b7280; margin-bottom: 20px;"></i>
+                            <h3>Сертификаты не найдены</h3>
+                            <p>Добавьте сертификаты в JSON файл или проверьте его формат.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                this.grid.innerHTML = this.certificates.map((cert, index) => `
+                    <div class="certificate-card" data-index="${index}">
+                        <img src="${cert.imageUrl}" 
+                             alt="${cert.title}" 
+                             class="certificate-image"
+                             loading="lazy"
+                             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300/2d2d2d/666?text=Изображение+не+загружено'">
+                        <div class="certificate-info">
+                            <h3 class="certificate-title">${cert.title}</h3>
+                            <p class="certificate-description">
+                                ${cert.description.length > 100 ? 
+                                  cert.description.substring(0, 100) + '...' : 
+                                  cert.description}
+                            </p>
+                            <div class="certificate-meta">
+                                <span class="certificate-date">${cert.date}</span>
+                                ${cert.issuer ? `<span class="certificate-issuer">${cert.issuer}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Добавляем обработчики кликов
+                document.querySelectorAll('.certificate-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        const index = parseInt(card.dataset.index);
+                        this.openModal(index);
+                    });
+                });
+                
+                console.log(`Отображено ${this.certificates.length} сертификатов`);
+            }
+            
+            openModal(index) {
+                this.currentIndex = index;
+                this.updateModal();
+                this.modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            updateModal() {
+                const cert = this.certificates[this.currentIndex];
+                
+                this.modalImage.src = cert.imageUrl;
+                this.modalImage.alt = cert.title;
+                this.modalTitle.textContent = cert.title;
+                this.modalDescription.textContent = cert.description;
+                this.modalDate.textContent = cert.date;
+                this.modalIssuer.textContent = cert.issuer ? `Выдан: ${cert.issuer}` : '';
+                
+                // Показываем/скрываем кнопки навигации
+                this.prevBtn.style.display = this.currentIndex > 0 ? 'flex' : 'none';
+                this.nextBtn.style.display = this.currentIndex < this.certificates.length - 1 ? 'flex' : 'none';
+            }
+            
+            closeModal() {
+                this.modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+            
+            showPrev() {
+                if (this.currentIndex > 0) {
+                    this.currentIndex--;
+                    this.updateModal();
+                }
+            }
+            
+            showNext() {
+                if (this.currentIndex < this.certificates.length - 1) {
+                    this.currentIndex++;
+                    this.updateModal();
+                }
+            }
+        }
+        
+        // Инициализация галереи при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM загружен, инициализируем галерею...');
+            new CertificateGallery();
+        });
+    </script>
+
 </body>
 </html>
