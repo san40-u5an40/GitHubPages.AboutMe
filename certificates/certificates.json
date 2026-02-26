@@ -12,24 +12,24 @@
       "id": 2,
       "title": "Подтверждение ИТ-компетенции (ООП)",
       "description": "Сертификат подтверждающий владение принципами ООП на продвинутом уровне.",
-      "image": "OOP.jpg",
+      "image": "OOP_pro_mincif.jpg",
       "date": "Февраль 2026",
       "issuer": "Минцифры"
     },
     {
       "id": 3,
       "title": "PRO C#. Основы программирования",
-      "description": "Прохождение базового обучающего курса по C#.",
-      "image": "csharp_base_stepik.jpg",
+      "description": "Прохождение обучающего курса по C# от Иосифа Дзеранова.",
+      "image": "PRO_CSHARP_stepik.jpg",
       "date": "Июнь 2025",
       "issuer": "Stepik"
     },
     {
       "id": 4,
-      "title": "Инди-курс по HTML и CSS",
-      "description": "Небольшой обучающий курс по разработке web-страниц.",
-      "image": "html_css_mini.jpg",
-      "date": "Декабрь 2025",
+      "title": "PRO SQL",
+      "description": "Прохождение обучающего курса по SQL от Иосифа Дзеранова.",
+      "image": "PRO_SQL_stepik.jpg",
+      "date": "Февраль 2026",
       "issuer": "Stepik"
     }
   ]
